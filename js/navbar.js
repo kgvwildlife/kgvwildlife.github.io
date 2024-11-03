@@ -16,7 +16,7 @@ document.addEventListener('scroll', function() {
 
 document.addEventListener('scroll', function() {
     const navbarLinks = document.querySelectorAll('.navbar a');
-    const changePoint = 0.65 * window.innerHeight; // Convert 70vh to pixels
+    const changePoint = 0.75 * window.innerHeight; // Convert 70vh to pixels
     const scrollPosition = window.scrollY; // Current scroll position
 
     navbarLinks.forEach(link => {

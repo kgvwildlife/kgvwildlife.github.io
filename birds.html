@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <link href='css\base.css' type='text/css' rel='stylesheet' />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>KGV Wildlife</title>
+    <meta charset="utf-8">
+    <link href='css\base.css' type='text/css' rel='stylesheet' />
+    <link href='css/scrollbar.css' type='text/css' rel='stylesheet' />
+    <link href="https://fonts.googleapis.com/css2?family=Arimo:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KGV Wildlife</title>
 </head>
 <body>
 <div class="navbar">
@@ -16,14 +18,21 @@
   <a href="#spare">Plants</a>
 </div>
 
-
-<footer class="footer">
-  <p>This is a third party website made by students as part of a CAS project. Contact details?</p>
-  <p>Footer image source: https://www.vecteezy.com/vector-art/50115656-landscape-illustration-of-a-wolf-howling-in-the-forest</p>
-</footer>
-<div class="footer-image">
-  <img src="images/footer2.png">
-</div>
+<div id="footer-box"></div>
+<script>
+    // Load the footer from footer.html
+    fetch('footer.html')
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.text(); // Convert the response to text
+        })
+        .then(data => {
+            document.getElementById('footer-box').innerHTML = data; // Insert the footer content
+        })
+        .catch(error => console.error('Error loading footer:', error)); // Handle errors
+</script>
 <script src="js/navbar.js"></script>
 </body>
 </html>

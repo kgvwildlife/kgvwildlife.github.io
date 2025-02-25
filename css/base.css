@@ -28,7 +28,7 @@ img {
     background-color: rgba(180, 180, 180, 0.1);
     backdrop-filter: blur(7px);
     color: white;
-    padding: 10px 20px;
+    padding: 12px 20px; /* Adjusted padding */
     border-radius: 1000px;
     text-align: center;
     z-index: 1000;
@@ -54,6 +54,9 @@ img {
     min-width: 160px;
     box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
     z-index: 1;
+    opacity: 0; /* Start hidden */
+    transform: translateY(-10px); /* Start slightly above */
+    transition: opacity 0.3s, transform 0.3s; /* Animation */
 }
 
 .dropdown-content a {
@@ -65,6 +68,8 @@ img {
 
 .dropdown:hover .dropdown-content {
     display: block;
+    opacity: 1; /* Fade in */
+    transform: translateY(0); /* Slide down */
 }
 
 .hero-image {

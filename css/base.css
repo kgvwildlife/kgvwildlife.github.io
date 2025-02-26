@@ -1,3 +1,4 @@
+Copy
 @import url('https://fonts.googleapis.com/css2?family=Arimo:ital,wght@0,400..700;1,400..700&display=swap');
 @charset "UTF-8";
 
@@ -34,6 +35,10 @@ img {
     text-align: center;
     z-index: 1000;
     transition: background 0.3s ease; /* Transition for background color */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px; /* Space between navbar items */
 }
 
 .navbar:hover {
@@ -43,11 +48,11 @@ img {
 .navbar a {
     color: white;
     text-decoration: none;
-    margin: 0 15px;
     font-weight: 500;
     position: relative;
     overflow: hidden;
     transition: color 0.3s ease; /* Transition for text color */
+    padding: 10px 0; /* Padding for better click area */
 }
 
 .navbar a:hover {
@@ -84,6 +89,7 @@ img {
     opacity: 0; /* Start hidden */
     transform: translateY(-10px); /* Start slightly above */
     transition: opacity 0.3s ease, transform 0.3s ease; /* Animation */
+    border-radius: 10px; /* Rounded corners */
 }
 
 .dropdown-content a {
@@ -112,6 +118,17 @@ img {
     to {
         opacity: 1;
         transform: translateY(0);
+    }
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
     }
 }
 
@@ -164,7 +181,7 @@ h2 {
     font-weight: 650;
     margin: 0;
     padding: 5px 0px;
-    animation: fadeIn 0.8s ease forwards; /* Fade in animation */
+    animation: slideIn 0.8s ease forwards; /* Slide in animation */
 }
 
 p {

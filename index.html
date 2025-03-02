@@ -1,100 +1,81 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="utf-8">
+    <link href='css/base.css' type='text/css' rel='stylesheet' />
+    <link href='css/scrollbar.css' type='text/css' rel='stylesheet' />
     <link href="https://fonts.googleapis.com/css2?family=Arimo:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>KGV Wildlife</title>
-    <style>
-        /* CSS is included below */
-    </style>
 </head>
-
 <body>
-    <!-- Navigation Bar -->
-    <div class="navbar">
-        <a href="#home">Home</a>
-        <a href="#about">About Us</a>
-        <a href="#research">Our Research</a>
-        <a href="#mission">Our Mission</a>
-        <a href="#facts">Facts</a>
-    </div>
-
-    <!-- Hero Section -->
-    <div id="home" class="hero-image">
-        <img src="https://cleanpublicdomain.com/downloads/tiger/" alt="Tiger">
-        <div class="overlay">
-            <h1>Welcome to KGV Wildlife</h1>
-            <p>Discover the beauty and importance of wildlife conservation</p>
+<div class="navbar">
+    <div class="dropdown">
+        <a href="#">About Us</a>
+        <div class="dropdown-content">
+            <a href="#">Our Aim</a>
+            <a href="#">Our People</a>
+            <a href="#">Our Leadership</a>
         </div>
     </div>
 
-    <!-- Subtitle Section -->
-    <div class="hero-image-subtitle">
-        <p>An image of a tiger (<i>Panthera tigris</i>), a critically endangered subspecies of tiger.</p>
-        <p>
-            Image source: <a href="https://cleanpublicdomain.com/downloads/tiger/" target="_blank">Tiger – Clean Public Domain</a>
-        </p>
-    </div>
-
-    <!-- Why Care About Wildlife Section -->
-    <div id="about" class="full-width-container">
-        <h2>Why care about wildlife?</h2>
-        <p>
-            The fact that life has managed to exist up to this point, surviving countless natural disasters
-            and changes to atmospheric conditions, is a result of evolution over billions of years. It is the intricate relationship
-            between the multitude of diverse species within an ecosystem that allows for life to persist against even the most unlikely odds.
-        </p>
-        <p>
-            With more biodiversity, more species will survive disturbances to their ecosystems, allowing for energy pathways
-            to remain from producers to apex predators. This ensures the survival of the ecosystem,
-            and hence this is called <i>ecosystem resilience.</i>
-        </p>
-    </div>
-
-    <!-- Our Mission Section -->
-    <div id="mission" class="full-width-container slide-in">
-        <h2>Our Mission</h2>
-        <p>Content coming soon...</p>
-    </div>
-
-    <!-- Facts Section -->
-    <div id="facts" class="full-width-container">
-        <h2>Did You Know?</h2>
-        <div class="fact-box">
-            <p>Tigers are apex predators, meaning they play a crucial role in maintaining the balance of their ecosystems.</p>
-        </div>
-        <div class="fact-box">
-            <p>Without predators like tigers, prey populations can grow unchecked, leading to overgrazing and habitat destruction.</p>
-        </div>
-        <div class="fact-box">
-            <p>Wildlife conservation helps maintain biodiversity, which is essential for a healthy and sustainable planet.</p>
+    <div class="dropdown">
+        <a href="#">Our Research</a>
+        <div class="dropdown-content">
+            <a href="#">Birds</a>
+            <a href="#">Mammals</a>
+            <a href="#">Insects</a>
+            <a href="#">Reptiles</a>
+            <a href="#">Plants</a>
         </div>
     </div>
 
-    <!-- Footer -->
-    <div class="footer">
-        <p>&copy; 2023 KGV Wildlife. All rights reserved.</p>
+    <div class="dropdown">
+        <a href="#">What We Do</a>
+        <div class="dropdown-content">
+            <a href="#">Conservation</a>
+            <a href="#">Education</a>
+            <a href="#">Awareness</a>
+        </div>
     </div>
+</div>
 
-    <script>
-        // Scroll animation for content sections
-        const sections = document.querySelectorAll('.full-width-container');
-        const observer = new IntersectionObserver(entries => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                }
-            });
-        }, {
-            threshold: 0.1
-        });
+<div class="hero-image">
+    <img src="images/tiger.jpg" alt="Tiger">
+</div>
+<div class="hero-image-subtitle">
+    <p>An image of a tiger (<i>Panthera tigris</i>).
+        A critically endangered subspecies of tiger once used to inhabit Hong Kong.
+    </p>
+    <p>
+        Image source: https://cleanpublicdomain.com/downloads/tiger/
+    </p>
+</div>
 
-        sections.forEach(section => {
-            observer.observe(section);
-        });
-    </script>
+<div class="full-width-container">
+    <h2>Why care about wildlife?</h2>
+    <p>
+        The fact that life has managed to exist up to this point, surviving countless natural disasters
+        and changes to atmospheric conditions, is a result of evolution over billions of years. It is the intricate relationship
+        between the multitude of diverse species within an ecosystem that allows for life to persist against even the most unlikely odds.
+        With more biodiversity, more species will survive disturbances to their ecosystems, allowing for energy pathways
+        to remain from producers to apex predators. This ensures the survival of the ecosystem,
+        and hence this is called <i>ecosystem resilience.</i>
+    </p>
+    <p>
+        However, this essential ability of ecosystems to withstand change is also very vulnerable. Ecosystems are already facing a
+        difficult battle for survival due to the worldwide declines in species populations. But when humans drive species to extinction,
+        not only does this erase millions of years of evolutionary progress, but it also pushes ecosystems to an even more fragile state, where
+        a single disease or adverse weather event could potentially cause the collapse of the entire ecosystem.
+    </p>
+    <p>
+        Therefore, it is the goal of this website to provide an exhibit of wildlife around KGV, as a way to document the diverse
+        collection of life within our environment, and where possible, to share ways to promote the survival of wildlife into the future.
+    </p>
+</div>
+
+<div id="footer-box"></div>
+<script src="js/footer-loader.js"></script>
+<script src="js/navbar.js"></script>
 </body>
-
 </html>

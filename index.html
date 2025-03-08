@@ -2,80 +2,1401 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <link href='css/base.css' type='text/css' rel='stylesheet' />
-    <link href='css/scrollbar.css' type='text/css' rel='stylesheet' />
-    <link href="https://fonts.googleapis.com/css2?family=Arimo:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>KGV Wildlife</title>
+    <link href="https://fonts.googleapis.com/css2?family=Arimo:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(-20px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        @keyframes shimmer {
+            0% { background-position: -100% 0; }
+            100% { background-position: 100% 0; }
+        }
+
+        @keyframes leafFall {
+            0% {
+                transform: translateY(-10vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) rotate(720deg);
+                opacity: 0;
+            }
+        }
+
+        @keyframes gradientBg {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        :root {
+            --primary-color: #006400;
+            --primary-light: #008800;
+            --primary-dark: #004d00;
+            --accent-color: #e6ffe6;
+            --text-color: #333;
+            --text-light: #fff;
+            --shadow-color: rgba(0, 0, 0, 0.2);
+            --transition-speed: 0.3s;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            font-size: 100%;
+            -webkit-text-size-adjust: 100%;
+            -ms-text-size-adjust: 100%;
+            font-family: "Arimo", sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: "Arimo", sans-serif;
+            background: #fff;
+            color: var(--text-color);
+            overflow-x: hidden;
+            transition: background-color 0.5s ease;
+        }
+
+        body.dark-mode {
+            background: #121212;
+            color: #f0f0f0;
+        }
+
+        body.dark-mode .navbar {
+            background-color: rgba(0, 60, 0, 0.9);
+        }
+
+        body.dark-mode .dropdown-content {
+            background-color: rgba(0, 50, 0, 0.95);
+        }
+
+        body.dark-mode .card {
+            background: rgba(20, 20, 20, 0.8);
+            box-shadow: 8px 8px 16px rgba(0, 0, 0, 0.3), 
+                        -8px -8px 16px rgba(30, 30, 30, 0.2);
+        }
+
+        img {
+            display: block;
+            max-width: 100%;
+        }
+
+        .background-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+            opacity: 0.4;
+        }
+
+        .leaf {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-image: url('https://picsum.photos/id/1020/20/20');
+            background-size: cover;
+            border-radius: 50%;
+            animation: leafFall 15s linear infinite;
+            z-index: -1;
+        }
+
+        .navbar {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: rgba(0, 100, 0, 0.9);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 1000px;
+            text-align: center;
+            z-index: 1000;
+            transition: all 0.4s ease;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 25px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+        }
+
+        .navbar:hover {
+            background-color: rgba(0, 90, 0, 0.95);
+            transform: translateX(-50%) translateY(-2px);
+        }
+
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s ease;
+            padding: 10px 5px;
+            font-size: 1.05rem;
+            letter-spacing: 0.5px;
+        }
+
+        .navbar a:hover {
+            color: rgba(255, 255, 255, 1);
+            transform: translateY(-2px);
+        }
+
+        .navbar a::after {
+            content: '';
+            position: absolute;
+            left: 50%;
+            bottom: 0;
+            width: 100%;
+            height: 2px;
+            background: white;
+            transform: translateX(-50%) scaleX(0);
+            transition: transform 0.4s ease;
+        }
+
+        .navbar a:hover::after {
+            transform: translateX(-50%) scaleX(1);
+        }
+
+        .dropdown {
+            position: relative;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: rgba(0, 128, 0, 0.95);
+            min-width: 200px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+            z-index: 1;
+            opacity: 0;
+            transform: translateY(-10px);
+            transition: all 0.4s ease;
+            border-radius: 15px;
+            overflow: hidden;
+            top: 100%;
+            left: -50%;
+            margin-top: 10px;
+        }
+
+        .dropdown-content a {
+            color: white;
+            padding: 15px 20px;
+            text-decoration: none;
+            display: block;
+            transition: all 0.3s ease;
+            text-align: left;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .dropdown-content a:last-child {
+            border-bottom: none;
+        }
+
+        .dropdown-content a:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+            padding-left: 25px;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .mode-toggle {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background-color: var(--primary-color);
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            z-index: 1000;
+            transition: all 0.4s ease;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .mode-toggle:hover {
+            transform: scale(1.1);
+            background-color: var(--primary-dark);
+        }
+
+        .mode-toggle i {
+            font-size: 1.5rem;
+        }
+
+        .hero-section {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .hero-image {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+
+        .hero-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 8s ease;
+            animation: pulse 15s infinite ease-in-out;
+        }
+
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.1) 50%, rgba(0,0,0,0.7) 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .hero-title {
+            font-size: 4.5rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            animation: fadeIn 1s ease forwards;
+            text-shadow: 2px 2px 15px rgba(0,0,0,0.7);
+        }
+
+        .hero-subtitle {
+            font-size: 1.8rem;
+            max-width: 800px;
+            margin-bottom: 30px;
+            animation: fadeIn 1.5s ease forwards;
+            text-shadow: 1px 1px 10px rgba(0,0,0,0.7);
+        }
+
+        .hero-btn {
+            padding: 15px 40px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            animation: fadeIn 2s ease forwards;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            animation: shimmer 3s infinite;
+        }
+
+        .hero-btn:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: white;
+            font-size: 2rem;
+            animation: float 2s infinite ease-in-out;
+            cursor: pointer;
+            z-index: 10;
+        }
+
+        .hero-image-subtitle {
+            box-sizing: border-box;
+            width: 100%;
+            padding: 20px 13%;
+            text-align: center;
+            animation: fadeIn 1s ease forwards;
+            background-color: #f9f9f9;
+            border-bottom: 1px solid #eee;
+        }
+
+        body.dark-mode .hero-image-subtitle {
+            background-color: #1a1a1a;
+            border-bottom: 1px solid #333;
+        }
+
+        .hero-image-subtitle p {
+            font-family: "Arimo", sans-serif;
+            font-size: 1.1em;
+            margin: 5px 0;
+            color: #555;
+        }
+
+        body.dark-mode .hero-image-subtitle p {
+            color: #bbb;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.8rem;
+            font-weight: 700;
+            margin-bottom: 50px;
+            position: relative;
+            padding-bottom: 20px;
+            color: var(--primary-dark);
+        }
+
+        body.dark-mode .section-title {
+            color: #8bc34a;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: var(--primary-color);
+            border-radius: 2px;
+        }
+
+        .full-width-container {
+            box-sizing: border-box;
+            width: 100%;
+            padding: 100px 11%;
+            position: relative;
+        }
+
+        .cards-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: all 0.4s ease;
+            transform: translateY(0);
+            position: relative;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .card-img {
+            width: 100%;
+            height: 200px;
+            overflow: hidden;
+        }
+
+        .card-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.8s ease;
+        }
+
+        .card:hover .card-img img {
+            transform: scale(1.1);
+        }
+
+        .card-content {
+            padding: 25px;
+        }
+
+        .card-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: var(--primary-dark);
+        }
+
+        body.dark-mode .card-title {
+            color: #8bc34a;
+        }
+
+        .card-text {
+            font-size: 1rem;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .card-btn {
+            display: inline-block;
+            padding: 10px 25px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .card-btn:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-3px);
+        }
+
+        .stats-section {
+            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-color) 100%);
+            color: white;
+            padding: 80px 11%;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stats-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .stat-item {
+            padding: 30px;
+            border-radius: 15px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            transition: transform 0.4s ease;
+        }
+
+        .stat-item:hover {
+            transform: translateY(-10px);
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .stat-text {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .parallax-section {
+            height: 400px;
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            text-align: center;
+            position: relative;
+        }
+
+        .parallax-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+        }
+
+        .parallax-content {
+            position: relative;
+            z-index: 1;
+            max-width: 800px;
+            padding: 0 20px;
+        }
+
+        .parallax-title {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+
+        .parallax-text {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+
+        .footer {
+            background-color: #222;
+            color: white;
+            padding: 80px 11% 40px;
+            position: relative;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-logo {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: var(--primary-light);
+        }
+
+        .footer-text {
+            margin-bottom: 20px;
+            line-height: 1.6;
+            opacity: 0.8;
+        }
+
+        .footer-social {
+            display: flex;
+            gap: 15px;
+        }
+
+        .social-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--primary-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+        }
+
+        .social-icon:hover {
+            transform: translateY(-5px);
+            background: var(--primary-light);
+        }
+
+        .footer-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .footer-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background: var(--primary-color);
+            border-radius: 1.5px;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 15px;
+        }
+
+        .footer-links a {
+            color: white;
+            opacity: 0.8;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+
+        .footer-links a:hover {
+            opacity: 1;
+            color: var(--primary-light);
+            transform: translateX(5px);
+        }
+
+        .footer-contact {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .footer-contact i {
+            margin-right: 15px;
+            color: var(--primary-light);
+            font-size: 1.2rem;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 40px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .footer-bottom p {
+            opacity: 0.7;
+            font-size: 0.9rem;
+        }
+
+        .scroll-to-top {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background-color: var(--primary-color);
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            z-index: 1000;
+            transition: all 0.4s ease;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .scroll-to-top.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .scroll-to-top:hover {
+            transform: translateY(-5px);
+            background-color: var(--primary-dark);
+        }
+
+        .scroll-to-top i {
+            font-size: 1.5rem;
+        }
+
+        /* Animated background elements */
+        .bg-pattern {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: -1;
+            opacity: 0.05;
+            background-image: 
+                radial-gradient(var(--primary-light) 2px, transparent 2px),
+                radial-gradient(var(--primary-light) 2px, transparent 2px);
+            background-size: 50px 50px;
+            background-position: 0 0, 25px 25px;
+        }
+
+        body.dark-mode .bg-pattern {
+            opacity: 0.1;
+        }
+
+        .shape {
+            position: absolute;
+            z-index: -1;
+            opacity: 0.1;
+            border-radius: 50%;
+            background: linear-gradient(45deg, var(--primary-color), var(--primary-light));
+        }
+
+        .shape-1 {
+            width: 300px;
+            height: 300px;
+            top: -150px;
+            right: -150px;
+        }
+
+        .shape-2 {
+            width: 200px;
+            height: 200px;
+            bottom: -100px;
+            left: -100px;
+        }
+
+        /* Responsive styles */
+        @media (max-width: 1200px) {
+            .hero-title {
+                font-size: 3.5rem;
+            }
+            .hero-subtitle {
+                font-size: 1.5rem;
+            }
+            .full-width-container {
+                padding: 80px 8%;
+            }
+        }
+
+        @media (max-width: 992px) {
+            .hero-title {
+                font-size: 3rem;
+            }
+            .section-title {
+                font-size: 2.5rem;
+            }
+            .navbar {
+                padding: 12px 20px;
+            }
+            .navbar a {
+                font-size: 0.95rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.5rem;
+            }
+            .hero-subtitle {
+                font-size: 1.2rem;
+            }
+            .hero-btn {
+                padding: 12px 30px;
+                font-size: 1rem;
+            }
+            .section-title {
+                font-size: 2.2rem;
+            }
+            .full-width-container {
+                padding: 60px 5%;
+            }
+            .navbar {
+                width: 90%;
+                gap: 15px;
+            }
+            .stat-number {
+                font-size: 2.5rem;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .hero-title {
+                font-size: 2rem;
+            }
+            .hero-subtitle {
+                font-size: 1rem;
+            }
+            .section-title {
+                font-size: 1.8rem;
+            }
+            .navbar {
+                gap: 10px;
+                padding: 10px 15px;
+            }
+            .navbar a {
+                font-size: 0.85rem;
+                padding: 8px 3px;
+            }
+            .mode-toggle, .scroll-to-top {
+                width: 50px;
+                height: 50px;
+                bottom: 20px;
+                right: 20px;
+            }
+            .scroll-to-top {
+                left: 20px;
+            }
+        }
+
+        /* Animation for elements when they come into view */
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease;
+        }
+
+        .animate-on-scroll.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Neumorphic card design */
+        .neumorphic-card {
+            background: #f0f0f0;
+            border-radius: 20px;
+            box-shadow: 8px 8px 16px rgba(0, 0, 0, 0.1), 
+                        -8px -8px 16px rgba(255, 255, 255, 0.7);
+            padding: 30px;
+            transition: all 0.4s ease;
+        }
+
+        .neumorphic-card:hover {
+            box-shadow: 12px 12px 20px rgba(0, 0, 0, 0.15), 
+                        -12px -12px 20px rgba(255, 255, 255, 0.8);
+        }
+
+        body.dark-mode .neumorphic-card {
+            background: #222;
+            box-shadow: 8px 8px 16px rgba(0, 0, 0, 0.3), 
+                        -8px -8px 16px rgba(40, 40, 40, 0.2);
+        }
+
+        body.dark-mode .neumorphic-card:hover {
+            box-shadow: 12px 12px 20px rgba(0, 0, 0, 0.4), 
+                        -12px -12px 20px rgba(40, 40, 40, 0.3);
+        }
+
+        /* Glassmorphism effect */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            transition: all 0.4s ease;
+        }
+
+        .glass-card:hover {
+            background: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Animated gradient background */
+        .gradient-bg {
+            background: linear-gradient(-45deg, #006400, #008800, #004d00, #00a000);
+            background-size: 400% 400%;
+            animation: gradientBg 15s ease infinite;
+        }
+    </style>
 </head>
 <body>
-<div class="navbar">
-    <div class="dropdown">
-        <a href="#">About Us</a>
-        <div class="dropdown-content">
-            <a href="#">Our Aim</a>
-            <a href="#">Our People</a>
-            <a href="#">Our Leadership</a>
+    <!-- Background animation elements -->
+    <div class="background-animation" id="background-animation"></div>
+    <div class="bg-pattern"></div>
+    <div class="shape shape-1"></div>
+    <div class="shape shape-2"></div>
+
+    <!-- Navbar -->
+    <div class="navbar">
+        <div class="dropdown">
+            <a href="#about"><i class="fas fa-info-circle"></i> About Us</a>
+            <div class="dropdown-content">
+                <a href="#aim"><i class="fas fa-bullseye"></i> Our Aim</a>
+                <a href="#people"><i class="fas fa-users"></i> Our People</a>
+                <a href="#leadership"><i class="fas fa-crown"></i> Our Leadership</a>
+            </div>
+        </div>
+
+        <div class="dropdown">
+            <a href="#research"><i class="fas fa-microscope"></i> Our Research</a>
+            <div class="dropdown-content">
+                <a href="#birds"><i class="fas fa-dove"></i> Birds</a>
+                <a href="#mammals"><i class="fas fa-paw"></i> Mammals</a>
+                <a href="#insects"><i class="fas fa-bug"></i> Insects</a>
+                <a href="#reptiles"><i class="fas fa-dragon"></i> Reptiles</a>
+                <a href="#plants"><i class="fas fa-seedling"></i> Plants</a>
+            </div>
+        </div>
+
+        <div class="dropdown">
+            <a href="#what-we-do"><i class="fas fa-hands-helping"></i> What We Do</a>
+            <div class="dropdown-content">
+                <a href="#conservation"><i class="fas fa-leaf"></i> Conservation</a>
+                <a href="#education"><i class="fas fa-graduation-cap"></i> Education</a>
+                <a href="#awareness"><i class="fas fa-bullhorn"></i> Awareness</a>
+            </div>
         </div>
     </div>
 
-    <div class="dropdown">
-        <a href="#">Our Research</a>
-        <div class="dropdown-content">
-            <a href="#">Birds</a>
-            <a href="#">Mammals</a>
-            <a href="#">Insects</a>
-            <a href="#">Reptiles</a>
-            <a href="#">Plants</a>
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="hero-image">
+            <img src="https://picsum.photos/id/219/1600/900" alt="Wildlife">
+            <div class="hero-overlay">
+                <h1 class="hero-title">Protecting Our Wildlife</h1>
+                <p class="hero-subtitle">Join us in our mission to preserve and protect the diverse wildlife around KGV for future generations</p>
+                <button class="hero-btn">Discover More</button>
+            </div>
         </div>
+        <div class="scroll-indicator">
+            <i class="fas fa-chevron-down"></i>
+        </div>
+    </section>
+
+    <div class="hero-image-subtitle">
+        <p>An image of a tiger (<i>Panthera tigris</i>).
+            A critically endangered subspecies of tiger once used to inhabit Hong Kong.
+        </p>
+        <p>
+            Image source: https://cleanpublicdomain.com/downloads/tiger/
+        </p>
     </div>
 
-    <div class="dropdown">
-        <a href="#">What We Do</a>
-        <div class="dropdown-content">
-            <a href="#">Conservation</a>
-            <a href="#">Education</a>
-            <a href="#">Awareness</a>
+    <!-- About Section -->
+    <section class="full-width-container" id="about">
+        <div class="bg-pattern"></div>
+        <h2 class="section-title animate-on-scroll">Why care about wildlife?</h2>
+        <div class="neumorphic-card animate-on-scroll">
+            <p>
+                The fact that life has managed to exist up to this point, surviving countless natural disasters
+                and changes to atmospheric conditions, is a result of evolution over billions of years. It is the intricate relationship
+                between the multitude of diverse species within an ecosystem that allows for life to persist against even the most unlikely odds.
+                With more biodiversity, more species will survive disturbances to their ecosystems, allowing for energy pathways
+                to remain from producers to apex predators. This ensures the survival of the ecosystem,
+                and hence this is called <i>ecosystem resilience.</i>
+            </p>
+            <p>
+                However, this essential ability of ecosystems to withstand change is also very vulnerable. Ecosystems are already facing a
+                difficult battle for survival due to the worldwide declines in species populations. But when humans drive species to extinction,
+                not only does this erase millions of years of evolutionary progress, but it also pushes ecosystems to an even more fragile state, where
+                a single disease or adverse weather event could potentially cause the collapse of the entire ecosystem.
+            </p>
+            <p>
+                Therefore, it is the goal of this website to provide an exhibit of wildlife around KGV, as a way to document the diverse
+                collection of life within our environment, and where possible, to share ways to promote the survival of wildlife into the future.
+            </p>
         </div>
+    </section>
+
+    <!-- Wildlife Categories Section -->
+    <section class="full-width-container" id="research">
+        <div class="shape shape-1"></div>
+        <h2 class="section-title animate-on-scroll">Explore Our Wildlife</h2>
+        <div class="cards-container">
+            <div class="card animate-on-scroll">
+                <div class="card-img">
+                    <img src="https://picsum.photos/id/237/600/400" alt="Mammals">
+                </div>
+                <div class="card-content">
+                    <h3 class="card-title">Mammals</h3>
+                    <p class="card-text">Discover the diverse mammal species in our region, from small rodents to larger creatures that call our ecosystem home.</p>
+                    <button class="card-btn">Learn More</button>
+                </div>
+            </div>
+            
+            <div class="card animate-on-scroll">
+                <div class="card-img">
+                    <img src="https://picsum.photos/id/26/600/400" alt="Birds">
+                </div>
+                <div class="card-content">
+                    <h3 class="card-title">Birds</h3>
+                    <p class="card-text">Explore the fascinating world of avian species that inhabit our skies, trees, and wetlands throughout the seasons.</p>
+                    <button class="card-btn">Learn More</button>
+                </div>
+            </div>
+            
+            <div class="card animate-on-scroll">
+                <div class="card-img">
+                    <img src="https://picsum.photos/id/48/600/400" alt="Insects">
+                </div>
+                <div class="card-content">
+                    <h3 class="card-title">Insects</h3>
+                    <p class="card-text">Delve into the incredible diversity of insects that form the backbone of our local ecosystem and food chains.</p>
+                    <button class="card-btn">Learn More</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats-section" id="stats">
+        <h2 class="section-title animate-on-scroll" style="color: white;">Our Impact</h2>
+        <div class="stats-container">
+            <div class="stat-item animate-on-scroll">
+                <div class="stat-number" id="stat1">0</div>
+                <div class="stat-text">Species Documented</div>
+            </div>
+            
+            <div class="stat-item animate-on-scroll">
+                <div class="stat-number" id="stat2">0</div>
+                <div class="stat-text">Conservation Projects</div>
+            </div>
+            
+            <div class="stat-item animate-on-scroll">
+                <div class="stat-number" id="stat3">0</div>
+                <div class="stat-text">Student Volunteers</div>
+            </div>
+            
+            <div class="stat-item animate-on-scroll">
+                <div class="stat-number" id="stat4">0</div>
+                <div class="stat-text">Research Papers</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Conservation Section -->
+    <section class="full-width-container" id="what-we-do">
+        <div class="shape shape-2"></div>
+        <h2 class="section-title animate-on-scroll">What We Do</h2>
+        <div class="neumorphic-card animate-on-scroll">
+            <h3 style="font-size: 1.8rem; margin-bottom: 20px; color: var(--primary-dark);">Conservation Efforts</h3>
+            <p>
+                Our conservation initiatives focus on protecting and preserving the natural habitats around KGV. Through careful monitoring, 
+                restoration projects, and sustainable practices, we work to ensure that local wildlife can thrive for generations to come.
+            </p>
+            <p>
+                We believe that every species plays a vital role in maintaining the delicate balance of our ecosystem. By safeguarding 
+                biodiversity, we're not just protecting individual species but ensuring the resilience and health of our entire natural environment.
+            </p>
+        </div>
+        
+        <div class="neumorphic-card animate-on-scroll" style="margin-top: 30px;">
+            <h3 style="font-size: 1.8rem; margin-bottom: 20px; color: var(--primary-dark);">Education & Awareness</h3>
+            <p>
+                Knowledge is the foundation of conservation. Through workshops, field trips, and classroom sessions, we educate students 
+                and the wider community about the importance of biodiversity and the threats facing our local wildlife.
+            </p>
+            <p>
+                Our awareness campaigns aim to inspire action and foster a deep connection with nature. By understanding the challenges 
+                and appreciating the beauty of our natural world, we can all become stewards of our environment.
+            </p>
+        </div>
+    </section>
+
+    <!-- Parallax Section -->
+    <section class="parallax-section" style="background-image: url('https://picsum.photos/id/1043/1600/900');">
+        <div class="parallax-overlay"></div>
+        <div class="parallax-content">
+            <h2 class="parallax-title">Join Our Mission</h2>
+            <p class="parallax-text">
+                Become part of our community dedicated to protecting and celebrating the rich biodiversity around KGV. 
+                Whether you're a student, teacher, or community member, there's a place for you in our conservation efforts.
+            </p>
+            <button class="hero-btn">Get Involved</button>
+        </div>
+    </section>
+
+    <!-- Team Section -->
+    <section class="full-width-container" id="people">
+        <h2 class="section-title animate-on-scroll">Our Team</h2>
+        <div class="cards-container">
+            <div class="card animate-on-scroll">
+                <div class="card-img">
+                    <img src="https://picsum.photos/id/1012/600/400" alt="Team Member">
+                </div>
+                <div class="card-content">
+                    <h3 class="card-title">Dr. Jane Wilson</h3>
+                    <p class="card-text">Lead Researcher with expertise in mammalian ecology and conservation biology. Passionate about preserving local biodiversity.</p>
+                </div>
+            </div>
+            
+            <div class="card animate-on-scroll">
+                <div class="card-img">
+                    <img src="https://picsum.photos/id/1027/600/400" alt="Team Member">
+                </div>
+                <div class="card-content">
+                    <h3 class="card-title">Prof. Michael Chen</h3>
+                    <p class="card-text">Ornithologist specializing in migratory patterns of birds in the Hong Kong region. Leads our bird monitoring programs.</p>
+                </div>
+            </div>
+            
+            <div class="card animate-on-scroll">
+                <div class="card-img">
+                    <img src="https://picsum.photos/id/1025/600/400" alt="Team Member">
+                </div>
+                <div class="card-content">
+                    <h3 class="card-title">Sarah Wong</h3>
+                    <p class="card-text">Environmental educator focusing on youth engagement. Develops and leads our school programs and community workshops.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div>
+                <div class="footer-logo">KGV Wildlife</div>
+                <p class="footer-text">
+                    Dedicated to the documentation, preservation, and celebration of wildlife around King George V School and beyond.
+                </p>
+                <div class="footer-social">
+                    <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="social-icon"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+            
+            <div>
+                <h3 class="footer-title">Quick Links</h3>
+                <ul class="footer-links">
+                    <li><a href="#about">About Us</a></li>
+                    <li><a href="#research">Our Research</a></li>
+                    <li><a href="#what-we-do">What We Do</a></li>
+                    <li><a href="#people">Our Team</a></li>
+                    <li><a href="#stats">Our Impact</a></li>
+                </ul>
+            </div>
+            
+            <div>
+                <h3 class="footer-title">Wildlife Categories</h3>
+                <ul class="footer-links">
+                    <li><a href="#birds">Birds</a></li>
+                    <li><a href="#mammals">Mammals</a></li>
+                    <li><a href="#insects">Insects</a></li>
+                    <li><a href="#reptiles">Reptiles</a></li>
+                    <li><a href="#plants">Plants</a></li>
+                </ul>
+            </div>
+            
+            <div>
+                <h3 class="footer-title">Contact Us</h3>
+                <div class="footer-contact">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <p>King George V School, 2 Tin Kwong Road, Ho Man Tin</p>
+                </div>
+                <div class="footer-contact">
+                    <i class="fas fa-phone"></i>
+                    <p>+852 1234 5678</p>
+                </div>
+                <div class="footer-contact">
+                    <i class="fas fa-envelope"></i>
+                    <p>wildlife@kgv.edu.hk</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>&copy; 2023 KGV Wildlife. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Dark Mode Toggle -->
+    <div class="mode-toggle" id="mode-toggle">
+        <i class="fas fa-moon"></i>
     </div>
-</div>
 
-<div class="hero-image">
-    <img src="images/tiger.jpg" alt="Tiger">
-</div>
-<div class="hero-image-subtitle">
-    <p>An image of a tiger (<i>Panthera tigris</i>).
-        A critically endangered subspecies of tiger once used to inhabit Hong Kong.
-    </p>
-    <p>
-        Image source: https://cleanpublicdomain.com/downloads/tiger/
-    </p>
-</div>
+    <!-- Scroll to Top Button -->
+    <div class="scroll-to-top" id="scroll-top">
+        <i class="fas fa-arrow-up"></i>
+    </div>
 
-<div class="full-width-container">
-    <h2>Why care about wildlife?</h2>
-    <p>
-        The fact that life has managed to exist up to this point, surviving countless natural disasters
-        and changes to atmospheric conditions, is a result of evolution over billions of years. It is the intricate relationship
-        between the multitude of diverse species within an ecosystem that allows for life to persist against even the most unlikely odds.
-        With more biodiversity, more species will survive disturbances to their ecosystems, allowing for energy pathways
-        to remain from producers to apex predators. This ensures the survival of the ecosystem,
-        and hence this is called <i>ecosystem resilience.</i>
-    </p>
-    <p>
-        However, this essential ability of ecosystems to withstand change is also very vulnerable. Ecosystems are already facing a
-        difficult battle for survival due to the worldwide declines in species populations. But when humans drive species to extinction,
-        not only does this erase millions of years of evolutionary progress, but it also pushes ecosystems to an even more fragile state, where
-        a single disease or adverse weather event could potentially cause the collapse of the entire ecosystem.
-    </p>
-    <p>
-        Therefore, it is the goal of this website to provide an exhibit of wildlife around KGV, as a way to document the diverse
-        collection of life within our environment, and where possible, to share ways to promote the survival of wildlife into the future.
-    </p>
-</div>
-
-<div id="footer-box"></div>
-<script src="js/footer-loader.js"></script>
-<script src="js/navbar.js"></script>
+    <script>
+        // Create falling leaves effect
+        function createLeaves() {
+            const animationContainer = document.getElementById('background-animation');
+            const numberOfLeaves = 15;
+            
+            for (let i = 0; i < numberOfLeaves; i++) {
+                const leaf = document.createElement('div');
+                leaf.classList.add('leaf');
+                
+                // Random position, size, and delay
+                const size = Math.random() * 15 + 10;
+                const posX = Math.random() * 100;
+                const delay = Math.random() * 15;
+                const duration = Math.random() * 10 + 10;
+                
+                leaf.style.width = `${size}px`;
+                leaf.style.height = `${size}px`;
+                leaf.style.left = `${posX}%`;
+                leaf.style.animationDelay = `${delay}s`;
+                leaf.style.animationDuration = `${duration}s`;
+                
+                animationContainer.appendChild(leaf);
+            }
+        }
+        
+        // Animate numbers in stats section
+        function animateStats() {
+            const stats = [
+                { id: 'stat1', target: 150 },
+                { id: 'stat2', target: 25 },
+                { id: 'stat3', target: 120 },
+                { id: 'stat4', target: 18 }
+            ];
+            
+            stats.forEach(stat => {
+                const element = document.getElementById(stat.id);
+                const target = stat.target;
+                let current = 0;
+                const increment = target / 50; // Divide animation into 50 steps
+                const interval = 40; // Update every 40ms
+                
+                const timer = setInterval(() => {
+                    current += increment;
+                    if (current >= target) {
+                        current = target;
+                        clearInterval(timer);
+                    }
+                    element.textContent = Math.floor(current);
+                }, interval);
+            });
+        }
+        
+        // Animate elements when they come into view
+        function animateOnScroll() {
+            const elements = document.querySelectorAll('.animate-on-scroll');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                    }
+                });
+            }, { threshold: 0.1 });
+            
+            elements.forEach(element => {
+                observer.observe(element);
+            });
+        }
+        
+        // Toggle dark mode
+        function setupDarkMode() {
+            const toggle = document.getElementById('mode-toggle');
+            const icon = toggle.querySelector('i');
+            
+            toggle.addEventListener('click', () => {
+                document.body.classList.toggle('dark-mode');
+                
+                if (document.body.classList.contains('dark-mode')) {
+                    icon.classList.remove('fa-moon');
+                    icon.classList.add('fa-sun');
+                } else {
+                    icon.classList.remove('fa-sun');
+                    icon.classList.add('fa-moon');
+                }
+            });
+        }
+        
+        // Scroll to top functionality
+        function setupScrollToTop() {
+            const scrollBtn = document.getElementById('scroll-top');
+            
+            window.addEventListener('scroll', () => {
+                if (window.pageYOffset > 300) {
+                    scrollBtn.classList.add('active');
+                } else {
+                    scrollBtn.classList.remove('active');
+                }
+            });
+            
+            scrollBtn.addEventListener('click', () => {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+        }
+        
+        // Smooth scroll for navigation
+        function setupSmoothScroll() {
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+            
+            // Scroll indicator in hero section
+            const scrollIndicator = document.querySelector('.scroll-indicator');
+            if (scrollIndicator) {
+                scrollIndicator.addEventListener('click', () => {
+                    const aboutSection = document.getElementById('about');
+                    if (aboutSection) {
+                        aboutSection.scrollIntoView({
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            }
+        }
+        
+        // Initialize all functions when DOM is loaded
+        document.addEventListener('DOMContentLoaded', () => {
+            createLeaves();
+            animateOnScroll();
+            setupDarkMode();
+            setupScrollToTop();
+            setupSmoothScroll();
+            
+            // Animate stats when stats section comes into view
+            const statsSection = document.getElementById('stats');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        animateStats();
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.5 });
+            
+            if (statsSection) {
+                observer.observe(statsSection);
+            }
+            
+            // Hero button functionality
+            const heroBtn = document.querySelector('.hero-btn');
+            if (heroBtn) {
+                heroBtn.addEventListener('click', () => {
+                    const researchSection = document.getElementById('research');
+                    if (researchSection) {
+                        researchSection.scrollIntoView({
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            }
+        });
+    </script>
 </body>
 </html>

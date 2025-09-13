@@ -2,8 +2,8 @@
 /*
 document.addEventListener('scroll', function() {
     const navbar = document.querySelector('.navbar');
-    const scrollPosition = window.scrollY; // Current scroll position
-    const changePoint = 0.7 * window.innerHeight; // The scroll position to trigger the style change
+    const scrollPosition = window.scrollY;
+    const changePoint = 0.2 * window.innerHeight;
 
 
     if (scrollPosition > changePoint) {
@@ -14,16 +14,18 @@ document.addEventListener('scroll', function() {
 });
 */
 
+
 document.addEventListener('scroll', function() {
     const navbarLinks = document.querySelectorAll('.navbar a');
-    const changePoint = 0.75 * window.innerHeight; // Convert 70vh to pixels
-    const scrollPosition = window.scrollY; // Current scroll position
+    const changePointMultiplier = parseFloat(document.body.getAttribute('data-change-point'));
+    const changePoint = changePointMultiplier * window.innerHeight;
+    const scrollPosition = window.scrollY;
 
     navbarLinks.forEach(link => {
         if (scrollPosition > changePoint) {
-            link.style.color = 'black'; // Change text color
+            link.style.color = 'black';
         } else {
-            link.style.color = 'white'; // Reset text color
+            link.style.color = 'white';
         }
     });
 });

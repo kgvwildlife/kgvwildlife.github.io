@@ -101,6 +101,7 @@ p {
     display: flex;
     flex-direction: column; /* This is the key: stack items vertically */
     gap: 2rem; /* This still controls the space between the rows */
+    margin-top: 2rem;
 }
 
 

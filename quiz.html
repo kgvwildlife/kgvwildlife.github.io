@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <link href='css/scrollbar.css' type='text/css' rel='stylesheet' />
+    <link href="https://fonts.googleapis.com/css2?family=Arimo:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet">
+  <title>KGV Wildlife</title>
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="icon" type="image/png" href="images/icon/stage 3.png">
+</head>
+<body data-change-point="-0.1">
+    <div id="navbar-box"></div>
+<div id="navbar"></div>
+
+<div class="hero-image">
+    <img src="images/foam kitten.png">
+</div>
+
+  <div class="quiz-app">
+    <div class="quiz-card" id="start">
+      <header class="quiz-header">
+        <h1>Take the Conservation Quiz</h1>
+        <p class="quiz-muted">8 Multiple Choice Questions</p>
+      </header>
+
+      <div class="quiz-progress" aria-hidden="true">
+        <div class="quiz-bar" id="bar"></div>
+      </div>
+      <div class="quiz-meta">
+        <div id="progress">0/0</div>
+        <div id="score">Score: 0</div>
+      </div>
+
+      <form id="quiz" class="hide" aria-live="polite"></form>
+
+      <div id="splash" class="quiz-center">
+        <p class="quiz-muted">Click Start to begin.</p>
+        <div class="quiz-nav quiz-center">
+          <button id="btnStart" type="button" class="quiz-btn">Start Quiz</button>
+        </div>
+      </div>
+
+      <div id="controls" class="quiz-nav hide">
+        <button class="quiz-btn quiz-btn--secondary" type="button" id="btnBack">Back</button>
+        <button class="quiz-btn" type="button" id="btnNext" disabled>Next</button>
+        <button class="quiz-btn" type="button" id="btnFinish" class="hide">Finish</button>
+      </div>
+
+      <section id="results" class="hide" aria-live="polite"></section>
+    </div>
+  </div>
+
+
+<div id="footer-box"></div>
+
+<script src="js/black-navbar-loader.js"></script>
+<script src="js/navbar.js"></script>
+<script src="js/footer-loader.js"></script>
+<script src="js/quiz.js"></script>
+</body>
+</html>
